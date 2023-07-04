@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>Morse Code</title>
+<script>
+
+function encdec(){
+	let str_input = document.getElementById("input").value;
+	let operation = document.getElementById("operation").value;
+	
+	  const mcode = {
+      'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
+      'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
+      'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
+      'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+      'Y': '-.--', 'Z': '--..', ' ': ' ', '0': '-----',
+      '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....',
+      '6': '-....', '7': '--...', '8': '---..', '9': '----.',
+      '&': '.-...', "'": '.----.', '@': '.--.-.', ')': '-.--.-', '(': '-.--.',
+      ':': '---...', ',': '--..--', '=': '-...-', '!': '-.-.--', '.': '.-.-.-',
+      '-': '-....-', '+': '.-.-.', '"': '.-..-.', '?': '..--..', '/': '-..-.'
+    }
+	
+  let answer="";
+  let flag=0;
+
+  // If user chooses to encode a sentence
+  // Each letter is checked against the key in 'mcode'
+  // and the respective morse code value is added to variable 'answer'.
+  if( operation=="enc" ) { 
+
+    str_input=str_input.toUpperCase();
+    str_input=str_input.trim();
+     
+    for(let i in str_input) {
+
+      for(let j in mcode) {
+         let key = mcode[j];
+         if(str_input.charAt(i)==j) {
+            flag+=1;
+            answer+=key;
+            answer+=" ";
+          }
+          
+       }
+     }
+  } 
+   // If user has chosen to decode a morse code
+   // Each morse code value is checked against every value in 'mcode'
+   // and the key of the matching value is added to 'answer'.
+
+   else {
+     let temp="";
+     str_input= str_input+" ";
+     for( let i in str_input) {
+
+        if(str_input.charAt(i)!=' ') {
+
+          temp+=str_input.charAt(i);
+        }
+
+       else { 
+          for(let j in mcode) {
+             if(temp==mcode[j]) {
+               answer+=j;
+               flag+=1;
+              }
+          }
+          temp="";
+        }
+      }
+   }
+    
+   // Flag has been used to check that the values entered are present in 'mcode'
+   // If not an alert window pops up.
+   
+    if(flag==0) {
+       window.alert("Invalid Input");
+    }
+    else {
+      document.getElementById("output").innerHTML = answer; 
+    }
+   
+}
+
+</script>
+</head>
+<body>
+<H1>Morse code encoder/decoder</H1>
+<h3>@author: Rhea Prakash </h3>
+<div>
+<form>
+<p> Enter a string</p>
+<p> <textarea id="input" rows='5' cols='50'></textarea> </p>
+<p>
+<div id="optionloc" style="position:absolute; top:190px; left:240px;">
+<select id="operation">
+<option value="enc">Encode</option>
+<option value="dec">Decode</option>
+</select>
+</div>
+<div id="buttonloc" style="position:absolute; top:190px; left:320px;">
+<button type="button" id="submit" onclick=encdec()>Submit</button>
+</div>
+</p>
+
+<div>
+<p>Encoded/decoded Morse code: </p>
+<textarea id="output" rows='5' cols='50' readonly></textarea>
+</div>
+</form>
+</div>
+</body>
+</html>
